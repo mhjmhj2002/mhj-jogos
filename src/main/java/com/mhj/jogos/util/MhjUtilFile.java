@@ -9,10 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.log4j.Logger;
-
-import antlr.Utils;
-
 public class MhjUtilFile {
 
 	public static List<File> obterArquivos(final String diretorio, final String nomeArquivo) {
@@ -92,9 +88,9 @@ public class MhjUtilFile {
 								.parse(name.substring(name.indexOf(initName) + initName.length(), name.length())));
 					}
 				} catch (Exception e) {
-					Logger logger = Logger.getLogger(Utils.class.getName());
-					logger.debug("Erro: " + name + " - " + e.getMessage());
-					logger.debug("Parametros: " + initName);
+//					Logger logger = Logger.getLogger(Utils.class.getName());
+//					logger.debug("Erro: " + name + " - " + e.getMessage());
+//					logger.debug("Parametros: " + initName);
 				}
 			}
 		}
