@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
@@ -31,7 +32,6 @@ import com.mhj.jogos.domain.Dezena;
 import com.mhj.jogos.domain.Jogo;
 import com.mhj.jogos.domain.Premio;
 import com.mhj.jogos.enums.TipoJogo;
-import com.mhj.jogos.infra.FileSaver;
 import com.mhj.jogos.model.FrequenciaDezena;
 import com.mhj.jogos.model.JogoAcerto;
 import com.mhj.jogos.util.MhjUtilFile;
@@ -46,8 +46,8 @@ public class LotoFacilController {
 	@Autowired
 	private ConcursoDao concursoDao;
 
-	@Autowired
-	private FileSaver fileSaver;
+//	@Autowired
+//	private FileSaver fileSaver;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView home(){
@@ -172,15 +172,16 @@ public class LotoFacilController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView gravar(@RequestParam("sorteio") MultipartFile sorteio/*, BindingResult result, RedirectAttributes redirectAttributes*/) throws IOException, ParseException {
 		
-		File file = fileSaver.write("sorteio", sorteio);		
-
+		InputStream inputStream = sorteio.getInputStream();	
+		
+//		File file = fileSaver.write("sorteio", sorteio);		
 		Jogo jogo = jogoDao.findByTipo(TipoJogo.LOTOFACIL);
 		
 		if (jogo != null) {
 			jogoDao.delete(jogo);
 		}
 		
-		jogo = this.processFile(file);
+		jogo = this.processFile(inputStream);
 		
 		jogoDao.insert(jogo);
 		
@@ -189,7 +190,172 @@ public class LotoFacilController {
 		return modelAndView;
 	}
 
-	private Jogo processFile(File file) throws IOException, ParseException {
+	private Jogo processFile(InputStream inputStream) throws IOException, ParseException {
+		Reader reader = null;
+		BufferedReader bufferedReader = null;
+		Jogo jogo = new Jogo();
+		jogo.setNome(TipoJogo.LOTOFACIL.name());
+		jogo.setTipoJogo(TipoJogo.LOTOFACIL);
+		jogo.setValor(new BigDecimal(1.50));
+
+		try {
+			DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			reader = new BufferedReader(new InputStreamReader(inputStream));
+			bufferedReader = new BufferedReader(reader);
+			String linha = "";
+			int numeroRegistro = 1;
+			try {
+				Concurso concurso = new Concurso();
+				Premio premio;
+				while ((linha = bufferedReader.readLine()) != null) {
+					if (linha.startsWith("<td ") && !linha.contains("&nbsp")) {
+						// System.out.println("linha: "+linha+"registro:
+						// "+numeroRegistro);
+						linha = limpaRegistro(linha);
+						// numeroRegistro = new Long(linha);
+						switch (numeroRegistro) {
+						case 1:
+							concurso = new Concurso();
+							concurso.setNumero(new Long(linha));
+							// //System.out.println(linha);
+							break;
+						case 2:
+							concurso.setData(format.parse(linha));
+							// //System.out.println(linha);
+							break;
+						case 3:
+						case 4:
+						case 5:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 10:
+						case 11:
+						case 12:
+						case 13:
+						case 14:
+						case 15:
+						case 16:
+						case 17:
+							Dezena dezena = new Dezena();
+							dezena.setConcurso(concurso);
+							dezena.setNumero(new Integer(linha));
+							concurso.getDezenas().add(dezena);
+							// System.out.println(linha);
+							break;
+						case 18:
+							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.setArrecadacao(new BigDecimal(linha));
+							break;
+						case 19:
+							// System.out.println(linha);
+							premio = new Premio();
+							premio.setConcurso(concurso);
+							premio.setQuantidadeAcertos(15);
+							concurso.getPremios().add(premio);
+							break;
+						case 20:
+							// System.out.println(linha);
+							premio = new Premio();
+							premio.setConcurso(concurso);
+							premio.setQuantidadeAcertos(14);
+							concurso.getPremios().add(premio);
+							break;
+						case 21:
+							// System.out.println(linha);
+							premio = new Premio();
+							premio.setConcurso(concurso);
+							premio.setQuantidadeAcertos(13);
+							concurso.getPremios().add(premio);
+							break;
+						case 22:
+							// System.out.println(linha);
+							premio = new Premio();
+							premio.setConcurso(concurso);
+							premio.setQuantidadeAcertos(12);
+							concurso.getPremios().add(premio);
+							break;
+						case 23:
+							// System.out.println(linha);
+							premio = new Premio();
+							premio.setConcurso(concurso);
+							premio.setQuantidadeAcertos(11);
+							concurso.getPremios().add(premio);
+							break;
+						case 24:
+							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.getPremios().get(0).setValor(new BigDecimal(linha));
+							break;
+						case 25:
+							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.getPremios().get(1).setValor(new BigDecimal(linha));
+							break;
+						case 26:
+							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.getPremios().get(2).setValor(new BigDecimal(linha));
+							break;
+						case 27:
+							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.getPremios().get(3).setValor(new BigDecimal(linha));
+							break;
+						case 28:
+							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.getPremios().get(4).setValor(new BigDecimal(linha));
+							break;
+						case 29:
+							// System.out.println(linha);
+							break;
+						case 30:
+							// System.out.println(linha);
+							break;
+						case 31:
+							// System.out.println(linha);
+							numeroRegistro = 0;
+							concurso.setJogo(jogo);
+							jogo.getConcursos().add(concurso);
+							break;
+						default:
+							numeroRegistro = 0;
+							break;
+						}
+						numeroRegistro++;
+					}
+
+				}
+			} catch (IOException e) {
+				throw e;
+			}
+		} catch (FileNotFoundException e) {
+			throw e;
+		} catch (UnsupportedEncodingException e) {
+			throw e;
+		} finally {
+			if (reader != null) {
+				reader.close();
+			}
+			if (bufferedReader != null) {
+				bufferedReader.close();
+			}
+		}
+
+		return jogo;
+
+	}
+
+	public Jogo processFile(File file) throws IOException, ParseException {
 		Reader reader = null;
 		BufferedReader bufferedReader = null;
 		Jogo jogo = new Jogo();

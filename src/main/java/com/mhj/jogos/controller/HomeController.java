@@ -38,7 +38,7 @@ public class HomeController {
 		usuario.setSenha("$2a$08$6.2/OTZIqxTumFGNOSYAlut5To9jwYe6xxuSY/9tbQOAPM71blHuu");
 		usuario.setRoles(Arrays.asList(new Role("ROLE_ADMIN")));
 		
-		usuarioDao.gravar(usuario);
+//		usuarioDao.gravar(usuario);
 		
 		return "Url Mágica executada";
 	}
