@@ -27,52 +27,31 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-12">
-							<label>Total Premios: ${somaMaisSorteados}</label>
+							<label>Último concurso cadastrado: ${numero}</label>
 						</div>
 						<div class="col-md-12">
-							<label>Total Gastos: ${gasto}</label>
+							<label>Data: <fmt:formatDate pattern="dd/MM/yyyy"
+								value="${data}" /></label>
 						</div>
 						<div class="col-md-12">
-							<label>Lucro: ${lucro}</label>
+							<label>Dezenas: ${dezenas}</label>
+						</div>
+					</div>
+				</div>
+			</div>	
+			<h1>Opções:</h1>
+			<div class="form-group row">
+				<div class="col-md-12">
+					<div class="form-group row">
+						<div class="col-md-12">
+							<a href="${homePath}lotofacil/maisSorteadas">- Dezenas mais sorteadas</a>
+						</div>
+						<div class="col-md-12">
+							<a href="${homePath}lotofacil/menosSorteadas">- Dezenas menos sorteadas</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<h1>Dezenas Mais Sorteadas</h1>
-			<table
-				class="table table-bordered table-striped table-hover sortable">
-				<tr>
-					<th>Dezena</th>
-					<th>X Sorteada</th>
-				</tr>
-
-				<c:forEach items="${dezenasMaisSorteadas}" var="sorteada">
-					<tr>
-						<td>${sorteada.numero}</td>
-						<td>${sorteada.quantidade}</td>
-					</tr>
-				</c:forEach>
-			</table>
-			<h1>Detalhe</h1>
-			<table
-				class="table table-bordered table-striped table-hover sortable">
-				<tr>
-					<th>Concurso</th>
-					<th>Acertos</th>
-					<th>Valor</th>
-					<th>Data</th>
-				</tr>
-
-				<c:forEach items="${maisSorteados}" var="sorteio">
-					<tr>
-						<td>${sorteio.concurso}</td>
-						<td>${sorteio.acertos }</td>
-						<td>${sorteio.valor}</td>
-						<td><fmt:formatDate pattern="dd/MM/yyyy"
-								value="${sorteio.data}" /></td>
-					</tr>
-				</c:forEach>
-			</table>
 		</div>
 	</section>
 </tags:pageTemplate>

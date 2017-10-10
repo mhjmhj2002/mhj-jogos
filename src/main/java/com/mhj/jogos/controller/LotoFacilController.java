@@ -12,12 +12,16 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mhj.jogos.dao.ConcursoDao;
@@ -27,6 +31,7 @@ import com.mhj.jogos.domain.Dezena;
 import com.mhj.jogos.domain.Jogo;
 import com.mhj.jogos.domain.Premio;
 import com.mhj.jogos.enums.TipoJogo;
+import com.mhj.jogos.infra.FileSaver;
 import com.mhj.jogos.model.FrequenciaDezena;
 import com.mhj.jogos.model.JogoAcerto;
 import com.mhj.jogos.util.MhjUtilFile;
@@ -40,9 +45,30 @@ public class LotoFacilController {
 
 	@Autowired
 	private ConcursoDao concursoDao;
+
+	@Autowired
+	private FileSaver fileSaver;
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView home(){
+		
+		Concurso ultimoConcurso = concursoDao.getUltimoConcurso();
+		
+		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/home");
+		modelAndView.addObject("numero", ultimoConcurso.getNumero());
+		modelAndView.addObject("data", ultimoConcurso.getData());
+		
+		List<Integer> dezenas = new ArrayList<>();
+		for (Dezena dezena : ultimoConcurso.getDezenas()) {
+			dezenas.add(dezena.getNumero());
+		}
+		modelAndView.addObject("dezenas", dezenas);
+		
+		return modelAndView;
+	}
+
 	@RequestMapping("/maisSorteadas")
-	public ModelAndView listar() {
+	public ModelAndView maisSorteadas() {
 		List<JogoAcerto> maisSorteados = concursoDao.maisSorteados();
 		BigDecimal somaMaisSorteados = concursoDao.somaMaisSorteados();
 		BigDecimal gasto = concursoDao.gastoConcursos();
@@ -58,77 +84,109 @@ public class LotoFacilController {
 		return modelAndView;
 	}
 
-	@RequestMapping("/gravar")
-	public void lerSorteios() {
-		List<File> files = getSortedFiles("C:\\Users\\majara\\Desktop\\Jogos\\Lotofacil\\D_lotfac", "D_LOTFAC");
+	@RequestMapping("/menosSorteadas")
+	public ModelAndView menosSorteadas() {
+		List<JogoAcerto> maisSorteados = concursoDao.menosSorteados();
+		BigDecimal somaMenosSorteados = concursoDao.somaMenosSorteados();
+		BigDecimal gasto = concursoDao.gastoConcursos();
+		List<FrequenciaDezena> dezenasMenosSorteadas = concursoDao.dezenasMenosSorteadas();
+		BigDecimal lucro = somaMenosSorteados.subtract(gasto);
 
-		for (File file : files) {
-			
-			try {
-				
-				Jogo jogo = jogoDao.findByTipo(TipoJogo.LOTOFACIL);
-				
-				if (jogo != null) {
-					jogoDao.delete(jogo);
-				}
-				
-				jogo = this.processFile(file);
-				
-				jogoDao.insert(jogo);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/menosSorteadas");
+		modelAndView.addObject("dezenasMenosSorteadas", dezenasMenosSorteadas);
+		modelAndView.addObject("menosSorteados", maisSorteados);
+		modelAndView.addObject("somaMenosSorteados", somaMenosSorteados);
+		modelAndView.addObject("gasto", gasto);
+		modelAndView.addObject("lucro", lucro);
+		return modelAndView;
 	}
-	
+
 	@RequestMapping("/dezenasMaisSorteadas")
 	@ResponseBody
-	public List<FrequenciaDezena> dezenasMaisSorteadas(){
+	public List<FrequenciaDezena> dezenasMaisSorteadas() {
 		List<FrequenciaDezena> maisSorteados = concursoDao.dezenasMaisSorteadas();
 		return maisSorteados;
 	}
-	
+
 	@RequestMapping("/dezenasMenosSorteadas")
 	@ResponseBody
-	public List<FrequenciaDezena> dezenasMenosSorteadas(){
+	public List<FrequenciaDezena> dezenasMenosSorteadas() {
 		List<FrequenciaDezena> maisSorteados = concursoDao.dezenasMenosSorteadas();
 		return maisSorteados;
 	}
-	
+
 	@RequestMapping("/maisSorteados")
 	@ResponseBody
-	public List<JogoAcerto> maisSorteados(){
+	public List<JogoAcerto> maisSorteados() {
 		List<JogoAcerto> maisSorteados = concursoDao.maisSorteados();
 		return maisSorteados;
 	}
-	
+
 	@RequestMapping("/menosSorteados")
 	@ResponseBody
-	public List<JogoAcerto> menosSorteados(){
+	public List<JogoAcerto> menosSorteados() {
 		List<JogoAcerto> menosSorteados = concursoDao.menosSorteados();
 		return menosSorteados;
 	}
-	
+
 	@RequestMapping("/somaMaisSorteados")
 	@ResponseBody
-	public BigDecimal somaMaisSorteados(){
+	public BigDecimal somaMaisSorteados() {
 		BigDecimal somaMaisSorteados = concursoDao.somaMaisSorteados();
 		return somaMaisSorteados;
 	}
-	
+
 	@RequestMapping("/somaMenosSorteados")
 	@ResponseBody
-	public BigDecimal somaMenosSorteados(){
+	public BigDecimal somaMenosSorteados() {
 		BigDecimal somaMenosSorteados = concursoDao.somaMenosSorteados();
 		return somaMenosSorteados;
 	}
-	
+
 	@RequestMapping("/gastoConcursos")
 	@ResponseBody
-	public BigDecimal gastoConcursos(){
+	public BigDecimal gastoConcursos() {
 		BigDecimal gasto = concursoDao.gastoConcursos();
 		return gasto;
+	}
+	
+	@RequestMapping("/ultimoConsurso")
+	public ModelAndView ultimoConcurso(){
+
+		
+		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/ultimoConcurso");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping("/getUltimoConsurso")
+	@ResponseBody
+	public Concurso getUltimoConcurso(){
+		
+		Concurso concurso = concursoDao.getUltimoConcurso();
+		
+		return concurso;
+		
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView gravar(@RequestParam("sorteio") MultipartFile sorteio/*, BindingResult result, RedirectAttributes redirectAttributes*/) throws IOException, ParseException {
+		
+		File file = fileSaver.write("sorteio", sorteio);		
+
+		Jogo jogo = jogoDao.findByTipo(TipoJogo.LOTOFACIL);
+		
+		if (jogo != null) {
+			jogoDao.delete(jogo);
+		}
+		
+		jogo = this.processFile(file);
+		
+		jogoDao.insert(jogo);
+		
+		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/atualizaDadosOk");
+		
+		return modelAndView;
 	}
 
 	private Jogo processFile(File file) throws IOException, ParseException {
@@ -138,9 +196,9 @@ public class LotoFacilController {
 		jogo.setNome(TipoJogo.LOTOFACIL.name());
 		jogo.setTipoJogo(TipoJogo.LOTOFACIL);
 		jogo.setValor(new BigDecimal(1.50));
-		
+
 		try {
-			DateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+			DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			reader = new InputStreamReader(new FileInputStream(file));
 			bufferedReader = new BufferedReader(reader);
 			String linha = "";
@@ -311,21 +369,19 @@ public class LotoFacilController {
 	public final List<File> getSortedFiles(String folderName, String fileBaseName) {
 		return MhjUtilFile.obterArquivos(folderName, fileBaseName);
 	}
-	
 
-
-//	@RequestMapping("/detalhe/{id}")
-//	public ModelAndView detalhe(@PathVariable("id") int id) {
-//		ModelAndView modelAndView = new ModelAndView("/produtos/detalhe");
-//		Produto produto = produtoDao.find(id);
-//		modelAndView.addObject("produto", produto);
-//		return modelAndView;
-//	}
-//
-//	@RequestMapping("/{id}")
-//	@ResponseBody
-//	public Produto detalheJSON(@PathVariable("id") Integer id) {
-//		return produtoDao.find(id);
-//	}
+	// @RequestMapping("/detalhe/{id}")
+	// public ModelAndView detalhe(@PathVariable("id") int id) {
+	// ModelAndView modelAndView = new ModelAndView("/produtos/detalhe");
+	// Produto produto = produtoDao.find(id);
+	// modelAndView.addObject("produto", produto);
+	// return modelAndView;
+	// }
+	//
+	// @RequestMapping("/{id}")
+	// @ResponseBody
+	// public Produto detalheJSON(@PathVariable("id") Integer id) {
+	// return produtoDao.find(id);
+	// }
 
 }

@@ -7,7 +7,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<tags:pageTemplate titulo="Math">
+<tags:pageTemplate titulo="Jogos">
 
 	<header class="bg-primary text-white">
 		<div class="container text-center">

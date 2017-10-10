@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>mhj-math</title>
+<title>mhj-jogos</title>
 
 <c:url value="/resources/css" var="resourcesPath" />
 <link rel="stylesheet" href="${resourcesPath }/bootstrap.min.css">
@@ -24,7 +24,7 @@
 
 	<div class="container">
 	
-	<h1>Login mhj-math</h1>
+	<h1>Login mhj-jogos</h1>
 	
 	<form:form servletRelativeAction="/login" method="POST">
 		<div class="form-group">

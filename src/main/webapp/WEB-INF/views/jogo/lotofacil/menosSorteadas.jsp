@@ -27,7 +27,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-12">
-							<label>Total Premios: ${somaMaisSorteados}</label>
+							<label>Total Premios: ${somaMenosSorteados}</label>
 						</div>
 						<div class="col-md-12">
 							<label>Total Gastos: ${gasto}</label>
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 			</div>
-			<h1>Dezenas Mais Sorteadas</h1>
+			<h1>Dezenas Menos Sorteadas</h1>
 			<table
 				class="table table-bordered table-striped table-hover sortable">
 				<tr>
@@ -46,7 +46,7 @@
 					<th>X Sorteada</th>
 				</tr>
 
-				<c:forEach items="${dezenasMaisSorteadas}" var="sorteada">
+				<c:forEach items="${dezenasMenosSorteadas}" var="sorteada">
 					<tr>
 						<td>${sorteada.numero}</td>
 						<td>${sorteada.quantidade}</td>
@@ -63,7 +63,7 @@
 					<th>Data</th>
 				</tr>
 
-				<c:forEach items="${maisSorteados}" var="sorteio">
+				<c:forEach items="${menosSorteados}" var="sorteio">
 					<tr>
 						<td>${sorteio.concurso}</td>
 						<td>${sorteio.acertos }</td>

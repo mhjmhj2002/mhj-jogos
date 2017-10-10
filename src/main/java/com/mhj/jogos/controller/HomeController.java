@@ -33,9 +33,9 @@ public class HomeController {
 	@RequestMapping("/url-magica-maluca-oajksfbvad6584i57j54f9684nvi658efnoewfmnvowefnoeijn")
 	public String urlMagicaMaluca() {
 		Usuario usuario = new Usuario(); 
-		usuario.setNome("Admin");
-		usuario.setEmail("admin@casadocodigo.com.br");
-		usuario.setSenha("$2a$10$lt7pS7Kxxe5JfP.vjLNSyOXP11eHgh7RoPxo5fvvbMCZkCUss2DGu");
+		usuario.setNome("admin");
+		usuario.setEmail("mhjmhj2002@gmail.com");
+		usuario.setSenha("$2a$08$6.2/OTZIqxTumFGNOSYAlut5To9jwYe6xxuSY/9tbQOAPM71blHuu");
 		usuario.setRoles(Arrays.asList(new Role("ROLE_ADMIN")));
 		
 		usuarioDao.gravar(usuario);

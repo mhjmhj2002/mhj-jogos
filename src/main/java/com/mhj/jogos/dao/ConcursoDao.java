@@ -222,4 +222,17 @@ public class ConcursoDao {
 		}
 	}
 
+	public Concurso getUltimoConcurso() {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT c ");  
+		sql.append(" FROM Concurso c "); 
+		sql.append(" WHERE c.id = (SELECT MAX(id) FROM Concurso) ");
+
+		Query query = manager.createQuery(sql.toString(), Concurso.class);
+
+		Concurso concurso = (Concurso) query.getSingleResult();
+
+		return concurso;
+	}
+
 }

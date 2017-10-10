@@ -19,14 +19,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/resources/**").permitAll()
-			.antMatchers("/math/**").permitAll()
-			.antMatchers("/").permitAll()
-			.antMatchers("/url-magica-maluca-oajksfbvad6584i57j54f9684nvi658efnoewfmnvowefnoeijn").permitAll()
-//			.anyRequest().authenticated()
-			.and().formLogin().loginPage("/login").permitAll()
-			.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.and().csrf().disable();
+		.antMatchers("/admin/**").hasRole("ADMIN")
+		.antMatchers("/").permitAll()
+		.antMatchers("/resources/**").permitAll()
+		.antMatchers("/jogo/**").permitAll()
+		.antMatchers("/lotofacil/**").permitAll()
+		.antMatchers("/url-magica-maluca-oajksfbvad6584i57j54f9684nvi658efnoewfmnvowefnoeijn").permitAll()
+		.anyRequest().authenticated()
+		.and().formLogin().loginPage("/login").permitAll()
+		.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 	}
 	
 	@Override

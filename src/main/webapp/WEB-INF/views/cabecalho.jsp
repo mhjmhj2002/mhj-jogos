@@ -30,7 +30,7 @@
 				</a>
 					<div class="dropdown-menu dropdown-menu-right"
 						aria-labelledby="navbarDropdownPortfolio">
-						<a class="dropdown-item" href="${homePath}lotofacil/maisSorteadas"><fmt:message
+						<a class="dropdown-item" href="${homePath}lotofacil"><fmt:message
 								key="header.operations.1" /></a> <a class="dropdown-item"
 							href="portfolio-2-col.html"><fmt:message
 								key="header.operations.2" /></a> <a class="dropdown-item"

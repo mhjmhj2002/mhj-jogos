@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,10 +42,10 @@ public class Concurso {
 	@ManyToOne
 	private Jogo jogo;
 
-	@OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Dezena> dezenas;
 
-	@OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "concurso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Premio> premios;
 
 	public Concurso() {
