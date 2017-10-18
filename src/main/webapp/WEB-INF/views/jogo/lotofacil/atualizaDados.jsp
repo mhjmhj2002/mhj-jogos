@@ -23,10 +23,14 @@
 
 	<section id="about">
 		<div class="container">
-			<form:form action="${s:mvcUrl('LFC#gravar').build() }" method="post" enctype="multipart/form-data">
+			<form:form action="${s:mvcUrl('AC#gravar').build() }" method="post" commandName="usuario" enctype="multipart/form-data">
 				<div class="form-group">
-					<label>Arquivo</label> 
-					<input name=sorteio type="file" class="form-control" />
+					<label>Arquivo</label> <input name=sorteio type="file"
+						class="form-control" />
+				</div>
+				<div class="form-group">
+					<label>Token</label>
+					<form:input path="senha" type="password" cssClass="form-control" />
 				</div>
 				<button type="submit" class="btn btn-primary">Gravar</button>
 			</form:form>

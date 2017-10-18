@@ -20,7 +20,7 @@
 				<!--               <a class="nav-link js-scroll-trigger" href="#services">Services</a> -->
 				<!--             </li> -->
 				<li class="nav-item"><a class="nav-link js-scroll-trigger"
-					href="${homePath}#contact"><fmt:message key="header.contact" /></a>
+					href="${homePath}contato"><fmt:message key="header.contact" /></a>
 				</li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"

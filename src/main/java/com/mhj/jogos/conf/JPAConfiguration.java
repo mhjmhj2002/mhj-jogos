@@ -5,8 +5,10 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,7 +18,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @EnableTransactionManagement
+@PropertySource("classpath:jdbc-dev.properties")
 public class JPAConfiguration {
+	
+	 @Value("${jdbc.driverClassName}")
+	 private String driverClassName;
+	 @Value("${jdbc.dialect}")
+	 private String dialect;
+	 @Value("${jdbc.url}")
+	 private String jdbcURL;
+	 @Value("${jdbc.username}")
+	 private String username;
+	 @Value("${jdbc.password}")
+	 private String password;	
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
@@ -39,10 +53,11 @@ public class JPAConfiguration {
 		Properties props = new Properties();
 		
 //		props.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		props.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+		props.setProperty("hibernate.dialect", dialect);
 		
-        props.setProperty("hibernate.show_sql", "false");
+        props.setProperty("hibernate.show_sql", "true");
 		props.setProperty("hibernate.hbm2ddl.auto", "update");
+//		props.setProperty("hibernate.hbm2ddl.auto", "create");
 		return props;
 	}
 
@@ -55,10 +70,10 @@ public class JPAConfiguration {
 //		dataSource.setUrl("jdbc:mysql://localhost:3306/mhj-jogos");
 //		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		
-		dataSource.setUsername("postgres");
-        dataSource.setPassword("postgres");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/mhj-jogos");
-        dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        dataSource.setUrl(jdbcURL);
+        dataSource.setDriverClassName(driverClassName);
 		
 		return dataSource;
 	}

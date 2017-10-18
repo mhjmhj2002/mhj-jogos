@@ -11,6 +11,7 @@ import org.springframework.cache.guava.GuavaCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
@@ -35,14 +36,15 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.google.common.cache.CacheBuilder;
 import com.mhj.jogos.controller.HomeController;
+import com.mhj.jogos.dao.ContatoDAO;
 import com.mhj.jogos.dao.UsuarioDAO;
 import com.mhj.jogos.infra.FileSaver;
 
 @EnableWebMvc
-@ComponentScan(basePackageClasses = { HomeController.class, UsuarioDAO.class, FileSaver.class })
+@ComponentScan(basePackageClasses = { HomeController.class, UsuarioDAO.class, FileSaver.class, ContatoDAO.class })
 @EnableCaching
 public class AppWebConfiguration extends WebMvcConfigurerAdapter {
-
+	
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
@@ -119,21 +121,26 @@ public class AppWebConfiguration extends WebMvcConfigurerAdapter {
 	public LocaleResolver localeResolver() {
 		return new CookieLocaleResolver();
 	}
-
+	
 	@Bean
 	public MailSender mailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost("smtp.gmail.com");
-		mailSender.setUsername("teste@gmail.com");
-		mailSender.setPassword("123456");
-		mailSender.setPort(587);
-
+		mailSender.setHost("manuelhj.com.br");
+		mailSender.setUsername("contato@manuelhj.com.br");
+		mailSender.setPassword("@@2y244y26@@");
+		mailSender.setPort(465);
+		
 		Properties mailProperties = new Properties();
 		mailProperties.put("mail.smtp.auth", true);
 		mailProperties.put("mail.smtp.starttls.enable", true);
 		mailSender.setJavaMailProperties(mailProperties);
-
+		
 		return mailSender;
 	}
+	
+	@Bean
+	 public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	 }	
 
 }

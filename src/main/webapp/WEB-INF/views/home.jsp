@@ -41,16 +41,16 @@
 <!-- 		</div> -->
 <%-- 	</section> --%>
 
-	<section id="contact">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-					<h2><fmt:message key="home.about.contact" /></h2>
-					<p class="lead"><fmt:message key="home.about.contact.description" /></p>
-				</div>
-			</div>
-		</div>
-	</section>
+<%-- 	<section id="contact"> --%>
+<!-- 		<div class="container"> -->
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-lg-8 mx-auto"> -->
+<%-- 					<h2><fmt:message key="home.about.contact" /></h2> --%>
+<%-- 					<p class="lead"><fmt:message key="home.about.contact.description" /></p> --%>
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<%-- 	</section> --%>
 
 </tags:pageTemplate>
 

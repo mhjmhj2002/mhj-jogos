@@ -1,28 +1,38 @@
 package com.mhj.jogos.conf;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Profile("prod")
+@PropertySource("classpath:jdbc-prod.properties")
+@EnableTransactionManagement
 public class JPAProductionConfiguration {
-
-	@Autowired
-	private Environment environment;
 	
+	@Value("${jdbc.driverClassName}")
+	private String driverClassName;
+	@Value("${jdbc.dialect}")
+	private String dialect;
+	@Value("${jdbc.url}")
+	private String jdbcURL;
+	@Value("${jdbc.username}")
+	private String username;
+	@Value("${jdbc.password}")
+	private String password;	
+
 	@Bean
 	public Properties additionalProperties() {
 		Properties props = new Properties();
-		props.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-		props.setProperty("hibernate.show_sql", "false");
+		props.setProperty("hibernate.dialect", dialect);
+        props.setProperty("hibernate.show_sql", "false");
 		props.setProperty("hibernate.hbm2ddl.auto", "update");
 		return props;
 	}
@@ -30,14 +40,10 @@ public class JPAProductionConfiguration {
 	@Bean
 	public DataSource dataSource() throws URISyntaxException {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("org.postgresql.Driver");
-		// usuario:senha@host:port/path
-		URI dbUrl = new URI(environment.getProperty("DATABASE_URL"));
-		
-		dataSource.setUrl("jdbc:postgresql://"+dbUrl.getHost()
-			+":"+dbUrl.getPort()+dbUrl.getPath());
-		dataSource.setUsername(dbUrl.getUserInfo().split(":")[0]);
-		dataSource.setPassword(dbUrl.getUserInfo().split(":")[1]);
+		dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        dataSource.setUrl(jdbcURL);
+        dataSource.setDriverClassName(driverClassName);
 		
 		return dataSource;
 	}
