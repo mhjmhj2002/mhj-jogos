@@ -2,8 +2,6 @@ package org.mhj.jogos;
 
 import java.math.BigDecimal;
 
-import com.mhj.jogos.controller.LotoFacilController;
-
 public class Main {
 
 	public static void main(String[] args) {
