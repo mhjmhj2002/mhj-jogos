@@ -66,17 +66,17 @@ public class AdminController {
 	public ModelAndView gravar(@RequestParam("sorteio") MultipartFile sorteio, @Valid Usuario usuario,
 			BindingResult result, RedirectAttributes redirectAttributes) throws IOException, ParseException {
 
-		if (result.hasErrors()) {
-			return dadosLotofacil(usuario);
-		}
+//		if (result.hasErrors()) {
+//			return dadosLotofacil(usuario);
+//		}
 
 		ModelAndView modelAndView = new ModelAndView("redirect:/admin/dadosOk");
 
-		Usuario user = usuarioDAO.loadUserByUsername("mhjmhj2002@gmail.com");
+//		Usuario user = usuarioDAO.loadUserByUsername("mhjmhj2002@gmail.com");
 
-		if (user == null) {
-			return modelAndView;
-		}
+//		if (user == null) {
+//			return modelAndView;
+//		}
 
 //		if (!checkPassword(usuario.getPassword(), user.getPassword())) {
 //			return modelAndView;
