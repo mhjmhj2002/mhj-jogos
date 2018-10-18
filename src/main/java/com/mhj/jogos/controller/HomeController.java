@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,23 +34,23 @@ public class HomeController {
 
 	@Transactional
 	@ResponseBody
-	@RequestMapping("/url-magica-maluca-oajksfbvad6584i57j54f9684nvi658efnoewfmnvowefnoeijn")
+//	@RequestMapping("/url-magica-maluca-oajksfbvad6584i57j54f9684nvi658efnoewfmnvowefnoeijn")
 	public String urlMagicaMaluca() {
 		
 		LOG.debug("Inicio urlMagicaMaluca");
 		
 		Usuario usuario = null;
 
-		try {
-			usuario = usuarioDao.loadUserByUsername("mhjmhj2002@gmail.com");
-		} catch (UsernameNotFoundException e) {
-			usuario = null;
-		}
-		
-		if (usuario != null) {
-			LOG.debug("Fim urlMagicaMaluca");
-			return "Url Mágica executada";
-		}
+//		try {
+//			usuario = usuarioDao.loadUserByUsername("mhjmhj2002@gmail.com");
+//		} catch (UsernameNotFoundException e) {
+//			usuario = null;
+//		}
+//		
+//		if (usuario != null) {
+//			LOG.debug("Fim urlMagicaMaluca");
+//			return "Url Mágica executada";
+//		}
 		
 		usuario = new Usuario();
 		usuario.setNome("admin");

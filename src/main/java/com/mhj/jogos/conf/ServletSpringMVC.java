@@ -11,7 +11,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.context.request.RequestContextListener;
@@ -20,9 +19,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 @PropertySource("classpath:init.properties")
 public class ServletSpringMVC extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-	 @Value("${enviroment}")
-	 private String enviroment;
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {

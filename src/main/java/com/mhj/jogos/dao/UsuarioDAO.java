@@ -5,14 +5,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import com.mhj.jogos.domain.Usuario;
 
 @Repository
-public class UsuarioDAO implements UserDetailsService {
+public class UsuarioDAO /*implements UserDetailsService*/ {
 
 	@PersistenceContext
 	private EntityManager manager;
@@ -25,7 +25,7 @@ public class UsuarioDAO implements UserDetailsService {
 			.getResultList();
 		
 		if (usuarios.isEmpty()) {
-			throw new UsernameNotFoundException("Usuário "  + email + " não foi encontrado");
+//			throw new UsernameNotFoundException("Usuário "  + email + " não foi encontrado");
 		}
 		
 		return usuarios.get(0);

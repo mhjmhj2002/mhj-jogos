@@ -18,7 +18,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,9 +78,9 @@ public class AdminController {
 			return modelAndView;
 		}
 
-		if (!checkPassword(usuario.getPassword(), user.getPassword())) {
-			return modelAndView;
-		}
+//		if (!checkPassword(usuario.getPassword(), user.getPassword())) {
+//			return modelAndView;
+//		}
 
 		InputStream inputStream = sorteio.getInputStream();
 
@@ -457,7 +457,7 @@ public class AdminController {
 		if(null == stored_hash || !stored_hash.startsWith("$2a$"))
 			throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
 
-		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
+//		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
 
 		return(password_verified);
 	}
