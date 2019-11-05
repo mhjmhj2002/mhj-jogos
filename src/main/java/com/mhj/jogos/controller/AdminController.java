@@ -14,6 +14,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.validation.Valid;
 
@@ -47,6 +49,8 @@ public class AdminController {
 
 	@Autowired
 	private UsuarioDAO usuarioDAO;
+	
+	Logger logger = Logger.getLogger(this.getClass().getName());
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView home() {
@@ -65,7 +69,9 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView gravar(@RequestParam("sorteio") MultipartFile sorteio, @Valid Usuario usuario,
 			BindingResult result, RedirectAttributes redirectAttributes) throws IOException, ParseException {
-
+		
+		logger.log(Level.INFO, "inicio gravar");
+		
 //		if (result.hasErrors()) {
 //			return dadosLotofacil(usuario);
 //		}
@@ -83,18 +89,35 @@ public class AdminController {
 //		}
 
 		InputStream inputStream = sorteio.getInputStream();
-
-		Jogo jogo = jogoDao.findByTipo(TipoJogo.LOTOFACIL);
-
-		if (jogo != null) {
-			jogoDao.delete(jogo);
-		}
-
-		jogo = this.processFile(inputStream);
-
-		jogoDao.insert(jogo);
 		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				logger.log(Level.INFO, "inicio thread");
 
+				Jogo jogo = jogoDao.findByTipo(TipoJogo.LOTOFACIL);
+
+				if (jogo != null) {
+					jogoDao.delete(jogo);
+				}
+
+				try {
+					jogo = processFile(inputStream);
+				} catch (IOException | ParseException e) {
+					e.printStackTrace();
+				}
+
+				jogoDao.insert(jogo);
+				
+				logger.log(Level.INFO, "fim thread");
+				
+			}
+		}).start();
+		
+		logger.log(Level.INFO, "fim gravar");
+		
 		return modelAndView;
 
 	}
