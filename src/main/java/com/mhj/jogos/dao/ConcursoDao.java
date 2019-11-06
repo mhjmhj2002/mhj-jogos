@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -25,6 +26,19 @@ public class ConcursoDao {
 	public void gravar(Concurso concurso) {
 		manager.persist(concurso);
 	}
+
+	public void delete(Concurso concurso) {
+		manager.remove(concurso);		
+	}
+	
+	public void update(Concurso concurso) {
+		manager.merge(concurso);
+	}
+
+	public Concurso find(Long id) {
+		return manager.createQuery("select c from Concurso c where c.id = :id", Concurso.class).setParameter("id", id)
+				.getSingleResult();
+	}
 	
 	public List<FrequenciaDezena> dezenasMaisSorteadas() {
 		StringBuilder sql = new StringBuilder();
@@ -38,7 +52,7 @@ public class ConcursoDao {
 		sql.append(" GROUP BY d1.numero ");
 		sql.append(" ORDER BY count(d1.numero) desc ");
 		sql.append(" LIMIT 15 ");
-		sql.append(" ) as numeros order by numero ");
+		sql.append(" ) as numeros order by quantidade desc ");
 
 		Query query = manager.createNativeQuery(sql.toString(), "frequenciaDezenaMapping");
 
@@ -60,7 +74,7 @@ public class ConcursoDao {
 		sql.append(" GROUP BY d1.numero ");
 		sql.append(" ORDER BY count(d1.numero) ");
 		sql.append(" LIMIT 15 ");
-		sql.append(" ) as numeros order by numero ");
+		sql.append(" ) as numeros order by quantidade ");
 
 		Query query = manager.createNativeQuery(sql.toString(), "frequenciaDezenaMapping");
 
@@ -94,7 +108,7 @@ public class ConcursoDao {
 		sql.append(" ) as a ");
 		sql.append(" where p.concurso_id = a.id_concurso ");
 		sql.append(" and p.quantidadeacertos = a.acertos ");
-		sql.append(" order by a.acertos desc, a.concurso ");
+		sql.append(" order by a.data desc, a.acertos desc, a.concurso ");
 
 		Query query = manager.createNativeQuery(sql.toString(), "jogoAcertoMapping");
 
@@ -128,7 +142,7 @@ public class ConcursoDao {
 		sql.append(" ) as a ");
 		sql.append(" where p.concurso_id = a.id_concurso ");
 		sql.append(" and p.quantidadeacertos = a.acertos ");
-		sql.append(" order by a.acertos desc, a.concurso ");
+		sql.append(" order by a.data desc, a.acertos desc, a.concurso ");
 
 		Query query = manager.createNativeQuery(sql.toString(), "jogoAcertoMapping");
 
@@ -216,12 +230,6 @@ public class ConcursoDao {
 		return gasto;
 	}
 
-	public void deleteByJogo(Jogo jogo) {
-		for (Concurso concurso : jogo.getConcursos()) {
-			manager.detach(concurso);
-		}
-	}
-
 	public Concurso getUltimoConcurso() {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT c ");  
@@ -233,6 +241,40 @@ public class ConcursoDao {
 		Concurso concurso = (Concurso) query.getSingleResult();
 
 		return concurso;
+	}
+
+	public List<Concurso> findByJogo(Jogo jogo) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT c ");  
+		sql.append(" FROM Concurso c "); 
+		sql.append(" WHERE c.jogo.id = :idJogo ");
+
+		Query query = manager.createQuery(sql.toString(), Concurso.class);
+		query.setParameter("idJogo", jogo.getId());
+
+		@SuppressWarnings("unchecked")
+		List<Concurso> resultList = query.getResultList();
+
+		return resultList;
+	}
+
+	public Concurso findByNumero(Long numero) {
+
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT c ");  
+		sql.append(" FROM Concurso c "); 
+		sql.append(" WHERE c.numero = :numero ");
+
+		Query query = manager.createQuery(sql.toString(), Concurso.class);
+		
+		query.setParameter("numero", numero);
+
+		try {
+			Concurso concurso = (Concurso) query.getSingleResult();
+			return concurso;
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 }

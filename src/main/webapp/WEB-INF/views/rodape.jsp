@@ -22,6 +22,9 @@
 <!-- Plugin Angular -->
 <script src="${resourcesPath}/js/angular.min.js"></script>
 
+<!-- Jquery 3.4.1 -->
+<script src="${resourcesPath}/js/jquery.min.js"></script>
+
 <!-- Plugin MathJax -->
 <%-- <script type="text/javascript" async src="${resourcesPath}/js/MathJax.js?config=TeX-MML-AM_CHTML"></script> --%>
 <SCRIPT type="text/javascript" async  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" ></SCRIPT>

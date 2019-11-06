@@ -32,7 +32,13 @@
 								value="${data}" /></label>
 						</div>
 						<div class="col-md-12">
-							<label>Dezenas: ${dezenas}</label>
+							<label>Dezenas Sorteadas: ${dezenas}</label>
+						</div>
+						<div class="col-md-12">
+							<label>Dezena Mais Sorteada: ${dezenaMaisSorteada} - ${vezesMaisSorteada} vezes.</label>
+						</div>
+						<div class="col-md-12">
+							<label>Dezena Menos Sorteada: ${dezenaMenosSorteada} - ${vezesMenosSorteada} vezes.</label>
 						</div>
 					</div>
 				</div>
@@ -47,6 +53,9 @@
 						<div class="col-md-12">
 							<a href="${homePath}lotofacil/menosSorteadas">- Dezenas menos sorteadas</a>
 						</div>
+<!-- 						<div class="col-md-12"> -->
+<%-- 							<a href="${homePath}lotofacil/jogo">- Jogo</a> --%>
+<!-- 						</div> -->
 					</div>
 				</div>
 			</div>

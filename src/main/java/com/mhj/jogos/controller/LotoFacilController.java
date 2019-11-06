@@ -2,20 +2,28 @@ package com.mhj.jogos.controller;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mhj.jogos.dao.ConcursoDao;
 import com.mhj.jogos.domain.Concurso;
 import com.mhj.jogos.domain.Dezena;
 import com.mhj.jogos.model.FrequenciaDezena;
+import com.mhj.jogos.model.Jogo;
 import com.mhj.jogos.model.JogoAcerto;
+import com.mhj.jogos.util.Constantes;
+import com.mhj.math.exception.BusinessException;
 
 @Controller
 @RequestMapping("/lotofacil")
@@ -37,7 +45,18 @@ public class LotoFacilController {
 		for (Dezena dezena : ultimoConcurso.getDezenas()) {
 			dezenas.add(dezena.getNumero());
 		}
+		
+		dezenas.sort(Comparator.naturalOrder());
+		
+		List<FrequenciaDezena> dezenasMaisSorteadas = concursoDao.dezenasMaisSorteadas();
+		List<FrequenciaDezena> dezenasMenosSorteadas = concursoDao.dezenasMenosSorteadas();
+		
+		
 		modelAndView.addObject("dezenas", dezenas);
+		modelAndView.addObject("dezenaMaisSorteada", dezenasMaisSorteadas.get(0).getNumero());
+		modelAndView.addObject("vezesMaisSorteada", dezenasMaisSorteadas.get(0).getQuantidade());
+		modelAndView.addObject("dezenaMenosSorteada", dezenasMenosSorteadas.get(0).getNumero());
+		modelAndView.addObject("vezesMenosSorteada", dezenasMenosSorteadas.get(0).getQuantidade());
 
 		return modelAndView;
 	}
@@ -56,6 +75,7 @@ public class LotoFacilController {
 		modelAndView.addObject("somaMaisSorteados", somaMaisSorteados);
 		modelAndView.addObject("gasto", gasto);
 		modelAndView.addObject("lucro", lucro);
+		modelAndView.addObject("valor", Constantes.VALOR_LOTO_FACIL);
 		return modelAndView;
 	}
 
@@ -73,6 +93,7 @@ public class LotoFacilController {
 		modelAndView.addObject("somaMenosSorteados", somaMenosSorteados);
 		modelAndView.addObject("gasto", gasto);
 		modelAndView.addObject("lucro", lucro);
+		modelAndView.addObject("valor", Constantes.VALOR_LOTO_FACIL);
 		return modelAndView;
 	}
 
@@ -141,6 +162,23 @@ public class LotoFacilController {
 
 		return concurso;
 
+	}
+
+	@RequestMapping("/jogo")
+	public ModelAndView jogo() {
+
+		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/jogo");
+
+		return modelAndView;
+	}
+
+	@PostMapping
+	public ModelAndView jogar(Jogo jogo, Locale locale, BindingResult result, RedirectAttributes redirectAttributes) {
+		
+		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/jogoRetormo");
+//		modelAndView.addObject("linha", Impressao.getHTML(operacao.getRetorno()));
+
+		return modelAndView;
 	}
 
 }

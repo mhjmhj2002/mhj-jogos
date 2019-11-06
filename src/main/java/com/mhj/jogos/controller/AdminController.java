@@ -30,14 +30,18 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mhj.jogos.dao.ConcursoDao;
+import com.mhj.jogos.dao.DezenaDao;
+import com.mhj.jogos.dao.GanhadorDao;
 import com.mhj.jogos.dao.JogoDao;
-import com.mhj.jogos.dao.UsuarioDAO;
+import com.mhj.jogos.dao.PremioDao;
 import com.mhj.jogos.domain.Concurso;
 import com.mhj.jogos.domain.Dezena;
 import com.mhj.jogos.domain.Jogo;
 import com.mhj.jogos.domain.Premio;
 import com.mhj.jogos.domain.Usuario;
 import com.mhj.jogos.enums.TipoJogo;
+import com.mhj.jogos.util.Constantes;
 import com.mhj.jogos.util.MhjUtilFile;
 
 @Controller
@@ -48,7 +52,19 @@ public class AdminController {
 	private JogoDao jogoDao;
 
 	@Autowired
-	private UsuarioDAO usuarioDAO;
+	private ConcursoDao concursoDao;
+
+	@Autowired
+	private PremioDao premioDao;
+
+	@Autowired
+	private GanhadorDao ganhadorDao;
+
+	@Autowired
+	private DezenaDao dezenaDao;
+
+//	@Autowired
+//	private UsuarioDAO usuarioDAO;
 	
 	Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -95,22 +111,65 @@ public class AdminController {
 			@Override
 			public void run() {
 				
+				Jogo jogoNovo = null;
+				
 				logger.log(Level.INFO, "inicio thread");
 
-				Jogo jogo = jogoDao.findByTipo(TipoJogo.LOTOFACIL);
+				Jogo jogoEncontrado = jogoDao.findByTipo(TipoJogo.LOTOFACIL);
 
-				if (jogo != null) {
-					jogoDao.delete(jogo);
-				}
+//				if (jogoEncontrado != null) {
+					
+//					List<Concurso> concursos = concursoDao.findByJogo(jogo);
+//					
+//					for (Concurso concurso : concursos) {
+//						
+//						List<Premio> premios = premioDao.findByConcurso(concurso);
+//						
+//						for (Premio premio : premios) {
+//							
+//							List<Ganhador> ganhadores = ganhadorDao.findByPremio(premio);
+//							
+//							for (Ganhador ganhador : ganhadores) {
+//								ganhadorDao.delete(ganhador);
+//							}
+//							
+//							premioDao.delete(premio);
+//							
+//						}
+//						
+//						List<Dezena> dezenas = dezenaDao.findByConcurso(concurso);
+//						
+//						for (Dezena dezena : dezenas) {
+//							dezenaDao.delete(dezena);
+//						}
+//						
+//						concursoDao.delete(concurso);
+//						
+//					}
+					
+//					jogoDao.delete(jogoEncontrado);
+					
+//				}
 
 				try {
-					jogo = processFile(inputStream);
+					jogoNovo = processFile(inputStream);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
-
-				jogoDao.insert(jogo);
 				
+				if (jogoEncontrado == null) {
+					jogoDao.insert(jogoNovo);
+				} else {
+					List<Concurso> concursos = jogoNovo.getConcursos();
+					for (Concurso concurso : concursos) {
+						Concurso concursoNovo = concursoDao.findByNumero(concurso.getNumero());
+						if (concursoNovo == null) {
+							concurso.setJogo(jogoEncontrado);
+							concursoDao.gravar(concurso);
+						}
+					}
+				}
+
 				logger.log(Level.INFO, "fim thread");
 				
 			}
@@ -134,7 +193,7 @@ public class AdminController {
 		Jogo jogo = new Jogo();
 		jogo.setNome(TipoJogo.LOTOFACIL.name());
 		jogo.setTipoJogo(TipoJogo.LOTOFACIL);
-		jogo.setValor(new BigDecimal(1.50));
+		jogo.setValor(Constantes.VALOR_LOTO_FACIL);
 
 		try {
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -315,7 +374,7 @@ public class AdminController {
 		Jogo jogo = new Jogo();
 		jogo.setNome(TipoJogo.LOTOFACIL.name());
 		jogo.setTipoJogo(TipoJogo.LOTOFACIL);
-		jogo.setValor(new BigDecimal(1.50));
+		jogo.setValor(new BigDecimal(2.0));
 
 		try {
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy");

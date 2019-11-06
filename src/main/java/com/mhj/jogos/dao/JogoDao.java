@@ -47,7 +47,8 @@ public class JogoDao {
 	}
 
 	public void delete(Jogo jogo) {
-		manager.remove(jogo);		
+		Object c = manager.merge(jogo);
+		manager.remove(c);		
 	}
 
 }
