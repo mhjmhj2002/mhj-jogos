@@ -23,7 +23,6 @@ import com.mhj.jogos.model.FrequenciaDezena;
 import com.mhj.jogos.model.Jogo;
 import com.mhj.jogos.model.JogoAcerto;
 import com.mhj.jogos.util.Constantes;
-import com.mhj.math.exception.BusinessException;
 
 @Controller
 @RequestMapping("/lotofacil")
