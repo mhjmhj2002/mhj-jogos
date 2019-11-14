@@ -9,6 +9,8 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +32,11 @@ public class LotoFacilController {
 
 	@Autowired
 	private ConcursoDao concursoDao;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+//		binder.addValidators(new EquacaoGrau2Validation());
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView home() {
@@ -164,20 +171,43 @@ public class LotoFacilController {
 	}
 
 	@RequestMapping("/jogo")
-	public ModelAndView jogo() {
+	public ModelAndView jogo(Jogo jogo) {
 
 		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/jogo");
 
 		return modelAndView;
 	}
 
+//	@RequestMapping("jogo")
+//	public ModelAndView form(Jogo jogo) {
+//		ModelAndView modelAndView = new ModelAndView("math/em/1ano/equacao2grau");
+//		modelAndView.addObject("sinais", Sinal.values());
+//
+//		return modelAndView;
+//	}
+
 	@PostMapping
 	public ModelAndView jogar(Jogo jogo, Locale locale, BindingResult result, RedirectAttributes redirectAttributes) {
+
+		List<Integer> dezenas = jogo.getDezenasList();
 		
-		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/jogoRetormo");
+		List<JogoAcerto> sorteados = concursoDao.sorteados(dezenas);
+		BigDecimal somaSorteados = concursoDao.somaMaisSorteados();
+		BigDecimal gasto = concursoDao.gastoConcursos();
+		List<FrequenciaDezena> dezenasSelecionadas = concursoDao.getFrequenciaDezenas(dezenas);
+		BigDecimal lucro = somaSorteados.subtract(gasto);
+
+		ModelAndView modelAndView = new ModelAndView("/jogo/lotofacil/jogoRetorno");
+		modelAndView.addObject("dezenasSelecionadas", dezenasSelecionadas);
+		modelAndView.addObject("sorteados", sorteados);
+		modelAndView.addObject("somaSorteados", somaSorteados);
+		modelAndView.addObject("gasto", gasto);
+		modelAndView.addObject("lucro", lucro);
+		modelAndView.addObject("valor", Constantes.VALOR_LOTO_FACIL);
+		return modelAndView;
+		
 //		modelAndView.addObject("linha", Impressao.getHTML(operacao.getRetorno()));
 
-		return modelAndView;
 	}
 
 }

@@ -6,11 +6,15 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<%-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script> --%>
+
+<script type="text/javascript" src="<c:url value='/resources/vendor/jquery/jquery.min.js'/>"></script>
+
 <script type="text/javascript">
 
-// 	jQuery(document).ready(function() {
-// 		console.log("ready jogo");
-// 	});
+	$(document).ready(function() {
+		console.log("ready");
+	});
 
 // 	$(function(){
 		
@@ -20,10 +24,54 @@
 
 // 	});
 	
-	function onCheck1(check) {
-		console.log("onCheck: " + check.checked);
-		console.log("onCheck: " + check.value);
-		console.log("teste: " + $('#l1').text);
+	function onCheck(check) {
+		if(maxChecks()){
+			check.checked = false;
+			alert("Máximo 18!");
+			return;
+		}
+		addQtdeDezenas();
+		validarCheck(check,"l"+check.id);
+	}
+	
+	function validarCheck(check, id){
+		var label = document.getElementById(id);
+		if (check.checked) {
+			var numero = id.substring(2, 4);
+			label.textContent = numero;
+		} else {
+			label.textContent = '';
+		}
+// 		label.hidden = !check.checked;
+	}
+	
+	function maxChecks() {
+		var sum = 0;
+		for (var i = 1; i < 26; i++) {
+			var check = document.getElementById("n"+i);
+// 			console.log("check: " + check.id + ", checked: " + check.checked);
+			if (check.checked) {
+				sum++;
+			}
+		}
+		return sum > 18;
+	}
+	
+	function addQtdeDezenas() {
+		var sum = 0;
+		for (var i = 1; i < 26; i++) {
+			var check = document.getElementById("n"+i);
+// 			console.log("check: " + check.id + ", checked: " + check.checked);
+			if (check.checked) {
+				sum++;
+			}
+		}
+		var qtdDezenas = document.getElementById("qtdDezenas");
+		qtdDezenas.textContent = sum;
+	}
+	
+	function cleanPage(){
+		location.reload();
 	}
 </script>
 
@@ -44,117 +92,81 @@
 		<div class="container">
 			<form:form action="${s:mvcUrl('LFC#jogar').build() }" method="post" modelAttribute="jogo">
 				<div class="form-group">
-					<div class="col-md-12">
 						<div class="form-group row">
-							<div class="col-md-3">
-								  <input type="checkbox" id="n1" name="n1" onclick="onCheck1(this)">
-								  <label for="n1">01</label>
-								  <input type="checkbox" id="n2" name="n2" onclick="onCheck2(this)">
-								  <label for="n2">02</label>
-								  <input type="checkbox" id="n3" name="n3" onclick="onCheck3(this)">
-								  <label for="n3">03</label>
-								  <input type="checkbox" id="n4" name="n4" onclick="onCheck4(this)">
-								  <label for="n4">04</label>
-								  <input type="checkbox" id="n5" name="n5" onclick="onCheck5(this)">
-								  <label for="n5">05</label>
+							<div class="col-md-5">
+								  <form:checkbox path="dezenas" id="n1" name="n1" value="01" onclick="onCheck(this)"/>01
+								  <form:checkbox path="dezenas" id="n2" name="n2" value="02" onclick="onCheck(this)"/>02
+								  <form:checkbox path="dezenas" id="n3" name="n3" value="03" onclick="onCheck(this)"/>03
+								  <form:checkbox path="dezenas" id="n4" name="n4" value="04" onclick="onCheck(this)"/>04
+								  <form:checkbox path="dezenas" id="n5" name="n5" value="05" onclick="onCheck(this)"/>05
+<!-- 								  <label for="n01">01</label> -->
+<!-- 								  <input type="checkbox" id="n2" name="n2" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n02">02</label> -->
+<!-- 								  <input type="checkbox" id="n3" name="n3" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n03">03</label> -->
+<!-- 								  <input type="checkbox" id="n4" name="n4" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n04">04</label> -->
+<!-- 								  <input type="checkbox" id="n5" name="n5" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n05">05</label> -->
 							</div>
 						</div>
-					</div>
-					<div class="col-md-12">
 						<div class="form-group row">
-							<div class="col-md-3">
-								  <input type="checkbox" id="n6" name="n6" onclick="onCheck6(this)">
-								  <label for="n6">06</label>
-								  <input type="checkbox" id="n7" name="n7" onclick="onCheck7(this)">
-								  <label for="n7">07</label>
-								  <input type="checkbox" id="n8" name="n8" onclick="onCheck8(this)">
-								  <label for="n8">08</label>
-								  <input type="checkbox" id="n9" name="n9" onclick="onCheck9(this)">
-								  <label for="n9">09</label>
-								  <input type="checkbox" id="n10" name="n10" onclick="onCheck10(this)">
-								  <label for="n10">10</label>
+							<div class="col-md-5">
+								  <form:checkbox path="dezenas" id="n6" name="n6" value="06" onclick="onCheck(this)"/>06
+								  <form:checkbox path="dezenas" id="n7" name="n7" value="07" onclick="onCheck(this)"/>07
+								  <form:checkbox path="dezenas" id="n8" name="n8" value="08" onclick="onCheck(this)"/>08
+								  <form:checkbox path="dezenas" id="n9" name="n9" value="09" onclick="onCheck(this)"/>09
+								  <form:checkbox path="dezenas" id="n10" name="n10" value="10" onclick="onCheck(this)"/>10
+<!-- 								  <input type="checkbox" id="n6" name="n6" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n06">06</label> -->
+<!-- 								  <input type="checkbox" id="n7" name="n7" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n07">07</label> -->
+<!-- 								  <input type="checkbox" id="n8" name="n8" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n08">08</label> -->
+<!-- 								  <input type="checkbox" id="n9" name="n9" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n09">09</label> -->
+<!-- 								  <input type="checkbox" id="n10" name="n10" onclick="onCheck(this)"> -->
+<!-- 								  <label for="n10">10</label> -->
 							</div>
 						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group row">
-							<div class="col-md-3">
-								  <input type="checkbox" id="n11" name="n11" onclick="onCheck11(this)">
-								  <label for="n11">11</label>
-								  <input type="checkbox" id="n12" name="n12" onclick="onCheck12(this)">
-								  <label for="n12">12</label>
-								  <input type="checkbox" id="n13" name="n13" onclick="onCheck13(this)">
-								  <label for="n13">13</label>
-								  <input type="checkbox" id="n14" name="n14" onclick="onCheck14(this)">
-								  <label for="n14">14</label>
-								  <input type="checkbox" id="n15" name="n15" onclick="onCheck15(this)">
-								  <label for="n15">15</label>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group row">
-							<div class="col-md-3">
-								  <input type="checkbox" id="n16" name="n16" onclick="onCheck16(this)">
-								  <label for="n16">16</label>
-								  <input type="checkbox" id="n17" name="n17" onclick="onCheck17(this)">
-								  <label for="n17">17</label>
-								  <input type="checkbox" id="n18" name="n18" onclick="onCheck18(this)">
-								  <label for="n18">18</label>
-								  <input type="checkbox" id="n19" name="n19" onclick="onCheck19(this)">
-								  <label for="n19">19</label>
-								  <input type="checkbox" id="n20" name="n20" onclick="onCheck20(this)">
-								  <label for="n20">20</label>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="form-group row">
-							<div class="col-md-3">
-								  <input type="checkbox" id="n21" name="n21" onclick="onCheck21(this)">
-								  <label for="n21">21</label>
-								  <input type="checkbox" id="n22" name="n22" onclick="onCheck22(this)">
-								  <label for="n22">22</label>
-								  <input type="checkbox" id="n23" name="n23" onclick="onCheck23(this)">
-								  <label for="n23">23</label>
-								  <input type="checkbox" id="n24" name="n24" onclick="onCheck24(this)">
-								  <label for="n24">24</label>
-								  <input type="checkbox" id="n25" name="n25" onclick="onCheck25(this)">
-								  <label for="n25">25</label>
-							</div>
-						</div>
-					</div>
+
+			<div class="form-group row">
+				<div class="col-md-5">
+				<label>Quantidade de dezenas: </label>						  
+			  	<label id="qtdDezenas">0</label>
+			  	</div>	
+			</div>
 				</div>
-				<button type="submit" class="btn btn-primary">Jogar</button>
-			</form:form>
 			<div>	
 				<label>Selecionados: </label>						  
-			  	<label id="l1" hidden="true">1</label>							  
-			    <label id="l2" hidden="true">2</label>							  
-			    <label id="l3" hidden="true">3</label>							  
-			    <label id="l4" hidden="true">4</label>							  
-			    <label id="l5" hidden="true">5</label>							  
-			    <label id="l6" hidden="true">6</label>							  
-			    <label id="l7" hidden="true">7</label>							  
-			    <label id="l8" hidden="true">8</label>							  
-			    <label id="l9" hidden="true">9</label>							  
-			    <label id="l10" hidden="true">10</label>							  
-			    <label id="l11" hidden="true">11</label>							  
-			    <label id="l12" hidden="true">12</label>							  
-			    <label id="l13" hidden="true">13</label>							  
-			    <label id="l14" hidden="true">14</label>							  
-			    <label id="l15" hidden="true">15</label>							  
-			    <label id="l16" hidden="true">16</label>							  
-			    <label id="l17" hidden="true">17</label>							  
-			    <label id="l18" hidden="true">18</label>							  
-			    <label id="l19" hidden="true">19</label>							  
-			    <label id="l20" hidden="true">20</label>							  
-			    <label id="l21" hidden="true">21</label>							  
-			    <label id="l22" hidden="true">22</label>							  
-			    <label id="l23" hidden="true">23</label>							  
-			    <label id="l24" hidden="true">24</label>						  
-			    <label id="l25" hidden="true">25</label>
+			  	<label id="ln1"></label>							  
+			    <form:label id="ln2"></form:label>							  
+			    <form:label id="ln3"></form:label>							  
+			    <form:label id="ln4"></form:label>							  
+			    <form:label id="ln5"></form:label>							  
+			    <form:label id="ln6"></form:label>							  
+			    <form:label id="ln7"></form:label>							  
+			    <form:label id="ln8"></form:label>							  
+			    <form:label id="ln9"></form:label>							  
+			    <form:label id="ln10></form:label>							  
+			    <form:label id="ln11></form:label>							  
+			    <form:label id="ln12></form:label>							  
+			    <form:label id="ln13></form:label>							  
+			    <form:label id="ln14></form:label>							  
+			    <form:label id="ln15></form:label>							  
+			    <form:label id="ln16></form:label>							  
+			    <form:label id="ln17></form:label>							  
+			    <form:label id="ln18></form:label>							  
+			    <form:label id="ln19></form:label>							  
+			    <form:label id="ln20></form:label>							  
+			    <form:label id="ln21></form:label>							  
+			    <form:label id="ln22></form:label>							  
+			    <form:label id="ln23></form:label>							  
+			    <form:label id="ln24></form:label>						  
+			    <form:label id="ln25>25</form:label>
 			</div>
+				<button type="submit" class="btn btn-primary">Jogar</button>
+			</form:form>
 		</div>
 	</section>
 </tags:pageTemplate>

@@ -14,16 +14,13 @@
 <script src="${resourcesPath}/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <!-- Plugin JavaScript -->
-<script src="${resourcesPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
+<%-- <script src="${resourcesPath}/vendor/jquery-easing/jquery.easing.min.js"></script> --%>
 
 <!-- Custom JavaScript for this theme -->
 <script src="${resourcesPath}/js/scrolling-nav.js"></script>
 
 <!-- Plugin Angular -->
 <script src="${resourcesPath}/js/angular.min.js"></script>
-
-<!-- Jquery 3.4.1 -->
-<script src="${resourcesPath}/js/jquery.min.js"></script>
 
 <!-- Plugin MathJax -->
 <%-- <script type="text/javascript" async src="${resourcesPath}/js/MathJax.js?config=TeX-MML-AM_CHTML"></script> --%>

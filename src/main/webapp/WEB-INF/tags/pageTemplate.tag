@@ -24,8 +24,17 @@
 <!-- Custom styles for this template -->
 <link href="${resourcesPath}/css/scrolling-nav.css" rel="stylesheet">
 
+<script type="text/javascript">
+function loadOnce() 
+{ 
+	console.log("loadOnce");
+// 	location.reload();
+} 
+</script>
+
 </head>
-<body id="page-top">
+
+<body id="page-top" onload="loadOnce()">
 
 	<%@include file="/WEB-INF/views/cabecalho.jsp"%>
 

@@ -53,9 +53,9 @@
 						<div class="col-md-12">
 							<a href="${homePath}lotofacil/menosSorteadas">- Dezenas menos sorteadas</a>
 						</div>
-<!-- 						<div class="col-md-12"> -->
-<%-- 							<a href="${homePath}lotofacil/jogo">- Jogo</a> --%>
-<!-- 						</div> -->
+						<div class="col-md-12">
+							<a href="${homePath}lotofacil/jogo">- Jogo</a>
+						</div>
 					</div>
 				</div>
 			</div>
