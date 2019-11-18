@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
+import javax.persistence.Table;
 
 import com.mhj.jogos.enums.TipoJogo;
 import com.mhj.jogos.model.JogoAcerto;
@@ -31,6 +32,7 @@ import com.mhj.jogos.model.JogoAcerto;
 })
 
 @Entity
+@Table(name = "Jogo", schema = "mhj01")
 public class Jogo {
 
 	@Id
