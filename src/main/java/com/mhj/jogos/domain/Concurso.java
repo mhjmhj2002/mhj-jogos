@@ -30,7 +30,7 @@ import com.mhj.jogos.model.FrequenciaDezena;
 })
 
 @Entity
-@Table(name = "Concurso", schema = "mhj01")
+@Table(name = "Concurso", schema = "")
 public class Concurso {
 
 	@Id

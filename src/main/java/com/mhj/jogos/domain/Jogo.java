@@ -32,7 +32,7 @@ import com.mhj.jogos.model.JogoAcerto;
 })
 
 @Entity
-@Table(name = "Jogo", schema = "mhj01")
+@Table(name = "Jogo", schema = "")
 public class Jogo {
 
 	@Id
