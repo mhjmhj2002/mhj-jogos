@@ -67,7 +67,7 @@ public class ConcursoDao {
 		sql.append(" SELECT numero, quantidade from ");
 		sql.append(" ( ");
 		sql.append(" SELECT d1.numero numero, count(d1.numero) as quantidade ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
@@ -87,12 +87,12 @@ public class ConcursoDao {
 	public List<JogoAcerto> maisSorteados() {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT a.concurso, a.acertos, p.valor, a.data ");
-		sql.append(" FROM premio p, ");
+		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
-		sql.append(" FROM Jogo j, Concurso c, dezena d, ");
+		sql.append(" FROM Jogo j, Concurso c, Dezena d, ");
 		sql.append(" (SELECT d1.numero numero ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
@@ -121,12 +121,12 @@ public class ConcursoDao {
 	public List<JogoAcerto> menosSorteados() {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT a.concurso, a.acertos, p.valor, a.data ");
-		sql.append(" FROM premio p, ");
+		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
-		sql.append(" FROM Jogo j, Concurso c, dezena d, ");
+		sql.append(" FROM Jogo j, Concurso c, Dezena d, ");
 		sql.append(" (SELECT d1.numero numero ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
@@ -155,12 +155,12 @@ public class ConcursoDao {
 	public BigDecimal somaMaisSorteados() {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT sum(p.valor) ");
-		sql.append(" FROM premio p, ");
+		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
-		sql.append(" FROM Jogo j, Concurso c, dezena d, ");
+		sql.append(" FROM Jogo j, Concurso c, Dezena d, ");
 		sql.append(" (SELECT d1.numero numero ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
@@ -187,12 +187,12 @@ public class ConcursoDao {
 	public BigDecimal somaMenosSorteados() {
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT sum(p.valor) ");
-		sql.append(" FROM premio p, ");
+		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
-		sql.append(" FROM Jogo j, Concurso c, dezena d, ");
+		sql.append(" FROM Jogo j, Concurso c, Dezena d, ");
 		sql.append(" (SELECT d1.numero numero ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
@@ -288,7 +288,7 @@ public class ConcursoDao {
 		sql.append(" SELECT numero, quantidade from ");
 		sql.append(" ( ");
 		sql.append(" SELECT d1.numero numero, count(d1.numero) as quantidade ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
@@ -316,12 +316,12 @@ public class ConcursoDao {
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT a.concurso, a.acertos, p.valor, a.data ");
-		sql.append(" FROM premio p, ");
+		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
-		sql.append(" FROM Jogo j, Concurso c, dezena d, ");
+		sql.append(" FROM Jogo j, Concurso c, Dezena d, ");
 		sql.append(" (SELECT d1.numero numero ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
@@ -359,12 +359,12 @@ public class ConcursoDao {
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append(" SELECT sum(p.valor) ");
-		sql.append(" FROM premio p, ");
+		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
-		sql.append(" FROM Jogo j, Concurso c, dezena d, ");
+		sql.append(" FROM Jogo j, Concurso c, Dezena d, ");
 		sql.append(" (SELECT d1.numero numero ");
-		sql.append(" FROM Jogo j1, Concurso c1, dezena d1 ");
+		sql.append(" FROM Jogo j1, Concurso c1, Dezena d1 ");
 		sql.append(" WHERE j1.id = c1.jogo_id ");
 		sql.append(" AND c1.id = d1.concurso_id ");
 		sql.append(" AND j1.id = (SELECT id from Jogo where tipojogo = 'LOTOFACIL') ");
