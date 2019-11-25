@@ -391,4 +391,20 @@ public class ConcursoDao {
 		return soma;
 	}
 
+	public Long findLastConcurso() {
+
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT max(c.numero) ");  
+		sql.append(" FROM Concurso c "); 
+
+		Query query = manager.createQuery(sql.toString(), Concurso.class);
+		
+		try {
+			Long concurso = (Long) query.getSingleResult();
+			return concurso;
+		} catch (NoResultException e) {
+			return 0L;
+		}
+	}
+
 }

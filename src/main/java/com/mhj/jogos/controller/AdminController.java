@@ -160,12 +160,15 @@ public class AdminController {
 				if (jogoEncontrado == null) {
 					jogoDao.insert(jogoNovo);
 				} else {
+					Long numConcurso = concursoDao.findLastConcurso();
 					List<Concurso> concursos = jogoNovo.getConcursos();
 					for (Concurso concurso : concursos) {
-						Concurso concursoNovo = concursoDao.findByNumero(concurso.getNumero());
-						if (concursoNovo == null) {
-							concurso.setJogo(jogoEncontrado);
-							concursoDao.gravar(concurso);
+						if (concurso.getNumero().compareTo(numConcurso) > 0) {
+							Concurso concursoNovo = concursoDao.findByNumero(concurso.getNumero());
+							if (concursoNovo == null) {
+								concurso.setJogo(jogoEncontrado);
+								concursoDao.gravar(concurso);
+							}
 						}
 					}
 				}
