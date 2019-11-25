@@ -152,16 +152,20 @@ public class AdminController {
 //				}
 
 				try {
+					logger.log(Level.INFO, "processa arquivo");
 					jogoNovo = processFile(inputStream);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
 				
 				if (jogoEncontrado == null) {
+					logger.log(Level.INFO, "inserir dados novos");
 					jogoDao.insert(jogoNovo);
 				} else {
+					logger.log(Level.INFO, "atualizar dados");
 					Long numConcurso = concursoDao.findLastConcurso();
 					List<Concurso> concursos = jogoNovo.getConcursos();
+					logger.log(Level.INFO, "validacao loop");
 					for (Concurso concurso : concursos) {
 						if (concurso.getNumero().compareTo(numConcurso) > 0) {
 							Concurso concursoNovo = concursoDao.findByNumero(concurso.getNumero());
