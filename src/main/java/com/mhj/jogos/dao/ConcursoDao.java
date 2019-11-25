@@ -397,7 +397,7 @@ public class ConcursoDao {
 		sql.append(" SELECT max(c.numero) ");  
 		sql.append(" FROM Concurso c "); 
 
-		Query query = manager.createQuery(sql.toString(), Concurso.class);
+		Query query = manager.createQuery(sql.toString(), Long.class);
 		
 		try {
 			Long concurso = (Long) query.getSingleResult();
