@@ -86,7 +86,7 @@ public class ConcursoDao {
 	
 	public List<JogoAcerto> maisSorteados() {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT a.concurso, a.acertos, p.valor, a.data ");
+		sql.append(" SELECT a.concurso, a.acertos, a.data, CASE p.valor WHEN 0 THEN p.acumulado ELSE p.valor END as valor ");
 		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
@@ -120,7 +120,7 @@ public class ConcursoDao {
 
 	public List<JogoAcerto> menosSorteados() {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT a.concurso, a.acertos, p.valor, a.data ");
+		sql.append(" SELECT a.concurso, a.acertos, CASE p.valor WHEN 0 THEN p.acumulado ELSE p.valor END as valor, a.data ");
 		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
@@ -154,7 +154,7 @@ public class ConcursoDao {
 	
 	public BigDecimal somaMaisSorteados() {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT sum(p.valor) ");
+		sql.append(" SELECT sum(CASE p.valor WHEN 0 THEN p.acumulado ELSE p.valor END) ");
 		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
@@ -186,7 +186,7 @@ public class ConcursoDao {
 
 	public BigDecimal somaMenosSorteados() {
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT sum(p.valor) ");
+		sql.append(" SELECT sum(CASE p.valor WHEN 0 THEN p.acumulado ELSE p.valor END) ");
 		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
@@ -315,7 +315,7 @@ public class ConcursoDao {
 		}
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT a.concurso, a.acertos, p.valor, a.data ");
+		sql.append(" SELECT a.concurso, a.acertos, CASE p.valor WHEN 0 THEN p.acumulado ELSE p.valor END as valor, a.data ");
 		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");
@@ -358,7 +358,7 @@ public class ConcursoDao {
 		}
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append(" SELECT sum(p.valor) ");
+		sql.append(" SELECT sum(CASE p.valor WHEN 0 THEN p.acumulado ELSE p.valor END) ");
 		sql.append(" FROM Premio p, ");
 		sql.append(" ( ");
 		sql.append(" SELECT c.numero as concurso, count(c.numero) as acertos, c.id as id_concurso, c.data ");

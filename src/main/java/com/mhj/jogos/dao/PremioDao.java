@@ -51,4 +51,33 @@ public class PremioDao {
 		return resultList;
 	}
 
+	public List<Premio> findPremiosSemValor(int acertos) {
+		StringBuilder sql = new StringBuilder();
+		sql.append(" SELECT p ");  
+		sql.append(" FROM Premio p "); 
+		sql.append(" WHERE p.quantidadeAcertos = :acertos ");
+		sql.append(" AND p.valor = 0 ");
+		sql.append(" AND p.acumulado = 0 ");
+		sql.append(" ORDER BY p.concurso.id ");
+
+		Query query = manager.createQuery(sql.toString(), Premio.class);
+		query.setParameter("acertos", acertos);
+
+		@SuppressWarnings("unchecked")
+		List<Premio> resultList = query.getResultList();
+
+		return resultList;
+	}
+
+	public void atualizarValorNulo() {
+		Query query = manager.createNativeQuery(" UPDATE PREMIO SET VALOR = 0 WHERE VALOR IS NULL ");
+		query.executeUpdate();
+	}
+
+	public void atualizarAcumuladoNulo() {
+		Query query = manager.createNativeQuery(" UPDATE PREMIO SET ACUMULADO = 0 WHERE ACUMULADO IS NULL ");
+		query.executeUpdate();
+		
+	}
+
 }

@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
-import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

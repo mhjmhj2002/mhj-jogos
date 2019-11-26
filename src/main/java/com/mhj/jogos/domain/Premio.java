@@ -21,6 +21,7 @@ public class Premio {
 	private Long id;
 	private Integer quantidadeAcertos;
 	private BigDecimal valor;
+	private BigDecimal acumulado;
 
 	@ManyToOne
 	private Concurso concurso;
@@ -49,6 +50,9 @@ public class Premio {
 	}
 
 	public BigDecimal getValor() {
+		if (new BigDecimal(0).equals(valor)) {
+			return getAcumulado();
+		}
 		return valor;
 	}
 
@@ -70,6 +74,14 @@ public class Premio {
 
 	public void setGanhadores(List<Ganhador> ganhadores) {
 		this.ganhadores = ganhadores;
+	}
+
+	public BigDecimal getAcumulado() {
+		return acumulado;
+	}
+
+	public void setAcumulado(BigDecimal acumulado) {
+		this.acumulado = acumulado;
 	}
 
 }

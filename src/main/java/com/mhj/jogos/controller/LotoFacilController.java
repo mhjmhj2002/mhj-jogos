@@ -178,21 +178,13 @@ public class LotoFacilController {
 		return modelAndView;
 	}
 
-//	@RequestMapping("jogo")
-//	public ModelAndView form(Jogo jogo) {
-//		ModelAndView modelAndView = new ModelAndView("math/em/1ano/equacao2grau");
-//		modelAndView.addObject("sinais", Sinal.values());
-//
-//		return modelAndView;
-//	}
-
 	@PostMapping
 	public ModelAndView jogar(Jogo jogo, Locale locale, BindingResult result, RedirectAttributes redirectAttributes) {
 
 		List<Integer> dezenas = jogo.getDezenasList();
 		
 		List<JogoAcerto> sorteados = concursoDao.sorteados(dezenas);
-		BigDecimal somaSorteados = concursoDao.somaMaisSorteados();
+		BigDecimal somaSorteados = concursoDao.somaSorteados(dezenas);
 		BigDecimal gasto = concursoDao.gastoConcursos();
 		List<FrequenciaDezena> dezenasSelecionadas = concursoDao.getFrequenciaDezenas(dezenas);
 		BigDecimal lucro = somaSorteados.subtract(gasto);

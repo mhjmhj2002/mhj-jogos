@@ -31,8 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mhj.jogos.dao.ConcursoDao;
-import com.mhj.jogos.dao.DezenaDao;
-import com.mhj.jogos.dao.GanhadorDao;
 import com.mhj.jogos.dao.JogoDao;
 import com.mhj.jogos.dao.PremioDao;
 import com.mhj.jogos.domain.Concurso;
@@ -57,11 +55,11 @@ public class AdminController {
 	@Autowired
 	private PremioDao premioDao;
 
-	@Autowired
-	private GanhadorDao ganhadorDao;
+//	@Autowired
+//	private GanhadorDao ganhadorDao;
 
-	@Autowired
-	private DezenaDao dezenaDao;
+//	@Autowired
+//	private DezenaDao dezenaDao;
 
 //	@Autowired
 //	private UsuarioDAO usuarioDAO;
@@ -175,6 +173,16 @@ public class AdminController {
 							}
 						}
 					}
+					
+					logger.log(Level.INFO, "fim loop");
+
+					validarConcursosSemGanhadores(concursos, 15);
+					validarConcursosSemGanhadores(concursos, 14);
+					validarConcursosSemGanhadores(concursos, 13);
+					validarConcursosSemGanhadores(concursos, 12);
+					validarConcursosSemGanhadores(concursos, 11);
+					
+					validarValoresNulos();
 				}
 
 				logger.log(Level.INFO, "fim thread");
@@ -321,6 +329,9 @@ public class AdminController {
 							break;
 						case 29:
 							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.getPremios().get(0).setAcumulado(new BigDecimal(linha));
 							break;
 						case 30:
 							// System.out.println(linha);
@@ -502,6 +513,10 @@ public class AdminController {
 							break;
 						case 29:
 							// System.out.println(linha);
+							// System.out.println(linha);
+							linha = linha.replaceAll("\\.", "");
+							linha = linha.replaceAll(",", ".");
+							concurso.getPremios().get(0).setAcumulado(new BigDecimal(linha));
 							break;
 						case 30:
 							// System.out.println(linha);
@@ -549,6 +564,33 @@ public class AdminController {
 //		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
 
 		return(password_verified);
+	}
+
+	private void validarConcursosSemGanhadores(List<Concurso> concursos, Integer nums) {
+		logger.log(Level.INFO, "validarConcursosSemGanhadores inicio");
+		
+		List<Premio> premios = premioDao.findPremiosSemValor(nums);
+
+		for (Premio premio : premios) {
+			for (Concurso concurso : concursos) {
+				if (premio.getConcurso().getNumero().equals(concurso.getNumero())) {
+					premio.setAcumulado(concurso.getPremios().get(0).getAcumulado());
+					premioDao.update(premio);
+					break;
+				}
+			}			
+		}
+		
+		logger.log(Level.INFO, "validarConcursosSemGanhadores fim");		
+	}
+
+	private void validarValoresNulos() {
+		logger.log(Level.INFO, "validarValoresNulos inicio");
+		
+		premioDao.atualizarValorNulo();
+		premioDao.atualizarAcumuladoNulo();
+		
+		logger.log(Level.INFO, "validarValoresNulos fim");
 	}
 
 }

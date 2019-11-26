@@ -25,7 +25,7 @@
 				<div class="col-md-12">
 					<div class="form-group row">
 						<div class="col-md-12">
-							<label>Se eu tivesse jogado desde o começo, teria ganhado em premios: ${somaMaisSorteados}</label>
+							<label>Se eu tivesse jogado desde o começo, teria ganhado em premios: ${somaSorteados}</label>
 						</div>
 						<div class="col-md-12">
 							<label>Se eu tivesse jogado desde o começo, teria gastado (Considerando valor do jogo em R$ ${valor}): ${gasto}</label>

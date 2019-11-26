@@ -61,6 +61,9 @@
 		var sum = 0;
 		for (var i = 1; i < 26; i++) {
 			var check = document.getElementById("n"+i);
+			if(check == null) {
+				return;
+			}
 // 			console.log("check: " + check.id + ", checked: " + check.checked);
 			if (check.checked) {
 				sum++;
@@ -99,15 +102,6 @@
 								  <form:checkbox path="dezenas" id="n3" name="n3" value="03" onclick="onCheck(this)"/>03
 								  <form:checkbox path="dezenas" id="n4" name="n4" value="04" onclick="onCheck(this)"/>04
 								  <form:checkbox path="dezenas" id="n5" name="n5" value="05" onclick="onCheck(this)"/>05
-<!-- 								  <label for="n01">01</label> -->
-<!-- 								  <input type="checkbox" id="n2" name="n2" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n02">02</label> -->
-<!-- 								  <input type="checkbox" id="n3" name="n3" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n03">03</label> -->
-<!-- 								  <input type="checkbox" id="n4" name="n4" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n04">04</label> -->
-<!-- 								  <input type="checkbox" id="n5" name="n5" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n05">05</label> -->
 							</div>
 						</div>
 						<div class="form-group row">
@@ -117,54 +111,43 @@
 								  <form:checkbox path="dezenas" id="n8" name="n8" value="08" onclick="onCheck(this)"/>08
 								  <form:checkbox path="dezenas" id="n9" name="n9" value="09" onclick="onCheck(this)"/>09
 								  <form:checkbox path="dezenas" id="n10" name="n10" value="10" onclick="onCheck(this)"/>10
-<!-- 								  <input type="checkbox" id="n6" name="n6" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n06">06</label> -->
-<!-- 								  <input type="checkbox" id="n7" name="n7" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n07">07</label> -->
-<!-- 								  <input type="checkbox" id="n8" name="n8" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n08">08</label> -->
-<!-- 								  <input type="checkbox" id="n9" name="n9" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n09">09</label> -->
-<!-- 								  <input type="checkbox" id="n10" name="n10" onclick="onCheck(this)"> -->
-<!-- 								  <label for="n10">10</label> -->
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-5">
+								  <form:checkbox path="dezenas" id="n11" name="n11" value="11" onclick="onCheck(this)"/>11
+								  <form:checkbox path="dezenas" id="n12" name="n12" value="12" onclick="onCheck(this)"/>12
+								  <form:checkbox path="dezenas" id="n13" name="n13" value="13" onclick="onCheck(this)"/>13
+								  <form:checkbox path="dezenas" id="n14" name="n14" value="14" onclick="onCheck(this)"/>14
+								  <form:checkbox path="dezenas" id="n15" name="n15" value="15" onclick="onCheck(this)"/>15
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-5">
+								  <form:checkbox path="dezenas" id="n16" name="n16" value="16" onclick="onCheck(this)"/>16
+								  <form:checkbox path="dezenas" id="n17" name="n17" value="17" onclick="onCheck(this)"/>17
+								  <form:checkbox path="dezenas" id="n18" name="n18" value="18" onclick="onCheck(this)"/>18
+								  <form:checkbox path="dezenas" id="n19" name="n19" value="19" onclick="onCheck(this)"/>19
+								  <form:checkbox path="dezenas" id="n20" name="n20" value="20" onclick="onCheck(this)"/>20
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-5">
+								  <form:checkbox path="dezenas" id="n21" name="n21" value="21" onclick="onCheck(this)"/>21
+								  <form:checkbox path="dezenas" id="n22" name="n22" value="22" onclick="onCheck(this)"/>22
+								  <form:checkbox path="dezenas" id="n23" name="n23" value="23" onclick="onCheck(this)"/>23
+								  <form:checkbox path="dezenas" id="n24" name="n24" value="24" onclick="onCheck(this)"/>24
+								  <form:checkbox path="dezenas" id="n25" name="n25" value="25" onclick="onCheck(this)"/>25
 							</div>
 						</div>
 
-			<div class="form-group row">
-				<div class="col-md-5">
-				<label>Quantidade de dezenas: </label>						  
-			  	<label id="qtdDezenas">0</label>
-			  	</div>	
-			</div>
+						<div class="form-group row">
+							<div class="col-md-5">
+							<label>Quantidade de dezenas: </label>						  
+						  	<label id="qtdDezenas">0</label>
+						  	</div>	
+						</div>
 				</div>
-			<div>	
-				<label>Selecionados: </label>						  
-			  	<label id="ln1"></label>							  
-			    <form:label id="ln2"></form:label>							  
-			    <form:label id="ln3"></form:label>							  
-			    <form:label id="ln4"></form:label>							  
-			    <form:label id="ln5"></form:label>							  
-			    <form:label id="ln6"></form:label>							  
-			    <form:label id="ln7"></form:label>							  
-			    <form:label id="ln8"></form:label>							  
-			    <form:label id="ln9"></form:label>							  
-			    <form:label id="ln10></form:label>							  
-			    <form:label id="ln11></form:label>							  
-			    <form:label id="ln12></form:label>							  
-			    <form:label id="ln13></form:label>							  
-			    <form:label id="ln14></form:label>							  
-			    <form:label id="ln15></form:label>							  
-			    <form:label id="ln16></form:label>							  
-			    <form:label id="ln17></form:label>							  
-			    <form:label id="ln18></form:label>							  
-			    <form:label id="ln19></form:label>							  
-			    <form:label id="ln20></form:label>							  
-			    <form:label id="ln21></form:label>							  
-			    <form:label id="ln22></form:label>							  
-			    <form:label id="ln23></form:label>							  
-			    <form:label id="ln24></form:label>						  
-			    <form:label id="ln25>25</form:label>
-			</div>
 				<button type="submit" class="btn btn-primary">Jogar</button>
 			</form:form>
 		</div>
