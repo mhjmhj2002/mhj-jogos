@@ -42,7 +42,7 @@
 		} else {
 			label.textContent = '';
 		}
-// 		label.hidden = !check.checked;
+ 		label.hidden = !check.checked;
 	}
 	
 	function maxChecks() {
@@ -143,12 +143,57 @@
 
 						<div class="form-group row">
 							<div class="col-md-5">
-							<label>Quantidade de dezenas: </label>						  
-						  	<label id="qtdDezenas">0</label>
+								<label>Quantidade de dezenas: </label>	
+						  		<label id="qtdDezenas">0</label>
 						  	</div>	
 						</div>
+						
+						<div class="form-group row">
+							<div class="col-md-5">
+								<label>Dezenas Selecionadas: </label>						  
+						  	</div>
+						</div>
+						
+						<div class="form-group row">
+							<div class="col-md-1">
+						  		<label id="ln1" hidden="true">1</label>						  
+						  		<label id="ln2" hidden="true">2</label>						  
+						  		<label id="ln3" hidden="true">3</label>						  
+						  		<label id="ln4" hidden="true">4</label>						  
+						  		<label id="ln5" hidden="true">5</label>						  
+						  		<label id="ln6" hidden="true">6</label>						  
+						  		<label id="ln7" hidden="true">7</label>						  
+						  		<label id="ln8" hidden="true">8</label>						  
+						  		<label id="ln9" hidden="true">9</label>						  
+						  		<label id="ln10" hidden="true">10</label>					  
+						  		<label id="ln11" hidden="true">11</label>					  
+						  		<label id="ln12" hidden="true">12</label>					  
+						  		<label id="ln13" hidden="true">13</label>					  
+						  		<label id="ln14" hidden="true">14</label>					  
+						  		<label id="ln15" hidden="true">15</label>					  
+						  		<label id="ln16" hidden="true">16</label>					  
+						  		<label id="ln17" hidden="true">17</label>					  
+						  		<label id="ln18" hidden="true">18</label>					  
+						  		<label id="ln19" hidden="true">19</label>					  
+						  		<label id="ln20" hidden="true">20</label>					  
+						  		<label id="ln21" hidden="true">21</label>					  
+						  		<label id="ln22" hidden="true">22</label>					  
+						  		<label id="ln23" hidden="true">23</label>					  
+						  		<label id="ln24" hidden="true">24</label>					  
+						  		<label id="ln25" hidden="true">25</label>
+						  	</div>
+						</div>
+				
+					<div class="form-group row">
+						<div class="col-md-5">
+							<form:label path="validator"></form:label>	
+						</div>
+					</div>
+						
 				</div>
+				
 				<button type="submit" class="btn btn-primary">Jogar</button>
+				
 			</form:form>
 		</div>
 	</section>

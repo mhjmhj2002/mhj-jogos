@@ -387,6 +387,10 @@ public class ConcursoDao {
 		Query query = manager.createNativeQuery(sql.toString());
 
 		BigDecimal soma = (BigDecimal) query.getSingleResult();
+		
+		if (soma == null) {
+			soma = new BigDecimal(0);
+		}
 
 		return soma;
 	}

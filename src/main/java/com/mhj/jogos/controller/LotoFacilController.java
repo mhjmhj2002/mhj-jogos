@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,7 @@ import com.mhj.jogos.model.FrequenciaDezena;
 import com.mhj.jogos.model.Jogo;
 import com.mhj.jogos.model.JogoAcerto;
 import com.mhj.jogos.util.Constantes;
+import com.mhj.jogos.validator.JogoValidator;
 
 @Controller
 @RequestMapping("/lotofacil")
@@ -35,7 +38,7 @@ public class LotoFacilController {
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
-//		binder.addValidators(new EquacaoGrau2Validation());
+		binder.addValidators(new JogoValidator());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -179,7 +182,7 @@ public class LotoFacilController {
 	}
 
 	@PostMapping
-	public ModelAndView jogar(Jogo jogo, Locale locale, BindingResult result, RedirectAttributes redirectAttributes) {
+	public ModelAndView jogar(@Valid Jogo jogo, Locale locale, BindingResult result, RedirectAttributes redirectAttributes) {
 
 		List<Integer> dezenas = jogo.getDezenasList();
 		
